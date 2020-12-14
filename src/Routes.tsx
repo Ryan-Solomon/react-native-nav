@@ -2,6 +2,7 @@ import React, { FC } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 import { View, Text } from 'react-native';
+import Center from './Center';
 
 interface RoutesProps {}
 
@@ -9,9 +10,9 @@ const Stack = createStackNavigator();
 
 function Login() {
   return (
-    <View>
+    <Center>
       <Text>Login Component</Text>
-    </View>
+    </Center>
   );
 }
 
