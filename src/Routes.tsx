@@ -1,12 +1,17 @@
 import React, { FC } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import { NavigationContainer, useNavigation } from '@react-navigation/native';
+import {
+  NavigationContainer,
+  useNavigation,
+  useRoute,
+} from '@react-navigation/native';
 import { View, Text, Button } from 'react-native';
 import Center from './Center';
+import { AuthParamList } from './AuthParamList';
 
 interface RoutesProps {}
 
-const Stack = createStackNavigator();
+const Stack = createStackNavigator<AuthParamList>();
 
 function Login() {
   const navigation = useNavigation();
@@ -22,6 +27,8 @@ function Login() {
 }
 function Register() {
   const navigation = useNavigation();
+  const route = useRoute();
+
   return (
     <Center>
       <Text>Register Component</Text>
@@ -33,14 +40,21 @@ function Register() {
 export const Routes: FC<RoutesProps> = ({}) => {
   return (
     <NavigationContainer>
-      <Stack.Navigator
-        screenOptions={{
-          header: () => null,
-        }}
-        initialRouteName='Register'
-      >
-        <Stack.Screen name='Login' component={Login} />
-        <Stack.Screen name='Register' component={Register} />
+      <Stack.Navigator initialRouteName='Register'>
+        <Stack.Screen
+          options={{
+            title: 'Sign In',
+          }}
+          name='Login'
+          component={Login}
+        />
+        <Stack.Screen
+          options={{
+            title: 'Sign Up',
+          }}
+          name='Register'
+          component={Register}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
