@@ -1,13 +1,16 @@
-import React, { FC } from 'react';
+import React, { FC, useContext, useEffect, useState } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import {
   NavigationContainer,
   useNavigation,
   useRoute,
 } from '@react-navigation/native';
-import { View, Text, Button } from 'react-native';
+import { View, Text, Button, ActivityIndicator } from 'react-native';
 import Center from './Center';
 import { AuthParamList } from './AuthParamList';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { User } from 'firebase';
+import { AuthContext } from './AuthProvider';
 
 interface RoutesProps {}
 
@@ -38,6 +41,22 @@ function Register() {
 }
 
 export const Routes: FC<RoutesProps> = ({}) => {
+  const [loading, setLoading] = useState(true);
+  const { user } = useContext(AuthContext);
+
+  useEffect(() => {
+    AsyncStorage.getItem('user')
+      .then((user: User) => console.log(user))
+      .catch((e) => console.log(e));
+  }, []);
+
+  if (loading) {
+    return (
+      <Center>
+        <ActivityIndicator size='large' />
+      </Center>
+    );
+  }
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName='Register'>
